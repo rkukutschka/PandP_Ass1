@@ -1,3 +1,16 @@
 #Analysis 1
 
-# more code to come
+
+
+# load
+data(Titanic)
+View(Titanic)
+class(Titanic)
+
+
+# Convert to data frame 
+as.data.frame(Titanic)
+
+plot(Titanic$Survived)
+
+mean(Titanic$Freq)
