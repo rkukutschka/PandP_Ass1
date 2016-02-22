@@ -6,8 +6,10 @@ output:pdf_document
 
 ```{r include=FALSE}
 library(repmis)
-possiblewd <- set_valid_wd
-setwd("~/Dropbox/4_Spring_2016/2_Collaborative Data Analysis/")
+
+possiblewd <- c("~/Dropbox/4_Spring_2016/2_Collaborative Data Analysis/", 
+                "~/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
+set_valid_wd(possiblewd)
 ```
 
 
