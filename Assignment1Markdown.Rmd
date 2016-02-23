@@ -1,0 +1,26 @@
+---
+title: "Assignment1Markdown"
+author: "Philip & Philipp"
+date: "23 Feb 2016"
+output: pdf_document
+Bibliography:
+  - Ass1Packages.bib
+---
+
+```{r}
+# Set working directory (for Unger's computer - dual work-path produces an error)
+setwd("/Users/Unger/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
+
+# Load packages and create BibTeX file (just examples)
+PackagesUsed <- c("ggplot2", "repmis", "rio")
+
+# Load PackagesUsed and create .bib BibTeX file
+repmis::LoadandCite(PackagesUsed, file = "Ass1Packages.bib", install = FALSE)
+```
+
+## This is a demo if we want to base assignment 1 on a markdown file
+
+### Dual-work directory file - I can't make it work as of now
+possiblewd <- c("~/Dropbox/4_Spring_2016/2_Collaborative Data Analysis/", 
+                "~/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
+set_valid_wd(possiblewd)
