@@ -3,8 +3,9 @@ title: "Assignment1Markdown"
 author: "Philip & Philipp"
 date: "23 Feb 2016"
 output: pdf_document
-Bibliography:
+bibliography:
   - Ass1Packages.bib
+  - Main.bib
 ---
 
 ```{r}
@@ -18,9 +19,16 @@ PackagesUsed <- c("ggplot2", "repmis", "rio")
 repmis::LoadandCite(PackagesUsed, file = "Ass1Packages.bib", install = FALSE)
 ```
 
-## This is a demo if we want to base assignment 1 on a markdown file
+## This is a template file if we want use a markdown file for assignment 1
 
-### Dual-work directory file - I can't make it work as of now
-possiblewd <- c("~/Dropbox/4_Spring_2016/2_Collaborative Data Analysis/", 
-                "~/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
-set_valid_wd(possiblewd)
+``` {r}
+ggplot(mtcars, aes(hp, mpg)) + geom_point()
+```
+
+# Test of reference-files
+
+Referencing the articles @Pemstein2010 and @WorldBank2013.
+
+Referencing R [@CiteR], ggplot2 [@R-ggplot2] and repmis [@R-repmis].
+
+## References
