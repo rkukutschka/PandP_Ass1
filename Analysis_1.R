@@ -1,5 +1,5 @@
 #Analysis 1
-
+library(gmodels)
 
 
 # load
@@ -9,8 +9,25 @@ class(Titanic)
 
 
 # Convert to data frame 
-as.data.frame(Titanic)
+titanicDataFr <- as.data.frame(Titanic)
 
-plot(Titanic$Survived)
+margin.table(Titanic, 1) # Class
+margin.table(Titanic, 2) # Sex
+margin.table(Titanic, 3) # Age
+margin.table(Titanic, 4) # Survived
 
-mean(Titanic$Freq)
+prop.table(Titanic, 2) # Prop for each case
+
+ftable(Titanic) # more attractive printing of the table (hierarchical)
+
+# 3-Way Frequency Table
+titanic_table <- xtabs(~Class+Sex+Age+Survived+Freq, data=Titanic) 
+      # I have to look into formula to assess whether it can be useful
+ftable(titanic_table) # print table 
+summary(titanic_table) # chi-square test of indepedence
+
+
+
+# 2-Way Cross Tabulation
+CrossTable(titanicDataFr$Survived,titanicDataFr$Class)  # only works with data frames but 
+                                                        # so far doesn't work...
