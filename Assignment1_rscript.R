@@ -31,23 +31,16 @@ combined_test <- data.frame(
 
 ### Graphs
 
-# Create numeric vectors for occupational status for fathers and sons respectively
-barplot(dist_fathers, main="Occupational status distribution for fathers", 
-        xlab="Occupational status")
-
-barplot(dist_sons, main="Occupational status distribution for sons", 
-        xlab="Occupational status")
-
 # Create table
 knitr::kable(combined_test, digits = 2)
 
-# Combined barplot
+# Combined barplot of occupational status distribution for fathers and sons
 x <- rbind(dist_fathers, dist_sons)
 barplot(x, 
-        col=c("Darkblue", "Red"),
+        col=c("navyblue", "darkkhaki"),
         main="Distribution of occupational status",
         xlab = "Occupational status categories",
-        legend = c("Fathers", "Sonds"),
+        legend = c("Fathers", "Sons"),
         ylim = c(0, 1600),
         beside = TRUE
         )
@@ -59,12 +52,11 @@ df_occStat$destination <- as.numeric(df_occStat$destination)
 # Create value capturing occupational status differences between fathers and sons
 df_occStat$difference <- df_occStat$destination - df_occStat$origin
 
-# Summarize observations over changes in status by collapsing on differences 
-
+# Summarize observations over changes in status by collapsing on differencesand create barplot
 collapsed <- summaryBy(Freq ~ difference, FUN = sum, data = df_occStat) 
 
 barplot(collapsed$Freq.sum, 
         names = collapsed$difference,
-        col = "Darkblue",
+        col = "Navyblue",
         ylim = c(0, 1400)
         )
