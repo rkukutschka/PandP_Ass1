@@ -1,36 +1,60 @@
 ---
-title: "Assignment1Markdown"
+title: "Assignment1"
 author: "Philip & Philipp"
 date: "23 Feb 2016"
 output: pdf_document
-bibliography:
-  - Ass1Packages.bib
-  - Main.bib
+bibliography: Ass1Packages.bib
 ---
 
-```{r}
-# Set working directory (for Unger's computer - dual work-path produces an error)
-#setwd("/Users/Unger/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
+```{r, prompt=FALSE}
+# Load packages and create BibTeX file for R-packages
+PackagesUsed <- c("ggplot2", "repmis", "doBy")
 
-# Load packages and create BibTeX file (just examples)
-PackagesUsed <- c("ggplot2", "repmis")
+setwd("~/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
 
 # Load PackagesUsed and create .bib BibTeX file
 repmis::LoadandCite(PackagesUsed, file = "Ass1Packages.bib", install = FALSE)
 ```
 
-## This is a template file if we want use a markdown file for assignment 1
+# Analysis of the dataset 'occupationalStatus'
+The dataset consists of a contingency table between the occupational status measured on an 8-point scales for fathers and their sons. 
 
-``` {r}
-ggplot(mtcars, aes(hp, mpg)) + geom_point()
+```{r, include=FALSE}
+source('Assignment1_rscript.R')
 ```
 
-# Test of reference-files
 
-Referencing the articles @Pemstein2010 and @WorldBank2013.
+``` {r}
+dist_combined <- rbind(dist_fathers, dist_sons)
+barplot(dist_combined, 
+        col=c("navyblue", "darkkhaki"),
+        main="Distribution of occupational status among fathers and sons",
+        xlab = "Occupational status categories",
+        legend = c("Fathers", "Sons"),
+        ylim = c(0, 1600),
+        beside = TRUE
+        )
+```
 
-Referencing R [@CiteR], ggplot2 [@R-ggplot2] and repmis [@R-repmis].
+Figure 1 shows the distribution of occupational status for sons and fathers respectively. There does not appear to be any major generational shifts, though sons are slightly overrepresented in occupational status group 7 and 8. 
 
-Reference bibliography @Eichholtz1998
+```{r}
+knitr::kable(frequency_table, digits = 2)
+```
+
+Table 1 is equivalent to figure 1 except that it shows the frequency distribution for each status category. 
+
+## Generational mobility
+Figure 1 and table 1 show the overall distribution of occupational status, but is not informative on the extent to which there are generational mobility. Figure 2 shows the distribution of generational mobility. -7 indicates observations where the father had social status 8 and the son 1. As such, a zero is when father and son had the same occupational status. 
+
+```{r}
+barplot(collapsed$Freq.sum, 
+        names = collapsed$difference,
+        col = "Navyblue",
+        ylim = c(0, 1400)
+        )
+```
+
+Packages used [@CiteR], [@R-doBy], [@R-ggplot2] and [@R-repmis].
 
 ## References

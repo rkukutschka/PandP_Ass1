@@ -22,28 +22,28 @@ dist_sons <- apply(occupationalStatus, 2, sum) # Destination
 freq_fathers <- prop.table(dist_fathers)
 freq_sons <- prop.table(dist_sons)
 
-# Combine frequencies into a dataframe (for table)
-combined_test <- data.frame(
-  status = c(1, 2, 3, 4, 5, 6, 7, 8),
-  f.fathers = freq_fathers,
-  f.sons = freq_sons
+# Combine frequencies into a table (data-frame format)
+frequency_table <- data.frame(
+  Category = c(1, 2, 3, 4, 5, 6, 7, 8),
+  Fathers = freq_fathers,
+  Sons = freq_sons
 )
 
 ### Graphs
 
 # Create table
-knitr::kable(combined_test, digits = 2)
+knitr::kable(frequency_table, digits = 2)
 
 # Combined barplot of occupational status distribution for fathers and sons
-x <- rbind(dist_fathers, dist_sons)
-barplot(x, 
+dist_combined <- rbind(dist_fathers, dist_sons)
+barplot(dist_combined, 
         col=c("navyblue", "darkkhaki"),
         main="Distribution of occupational status",
         xlab = "Occupational status categories",
         legend = c("Fathers", "Sons"),
         ylim = c(0, 1600),
         beside = TRUE
-        )
+)
 
 # Convert origin and destination to numeric variables
 df_occStat$origin <- as.numeric(df_occStat$origin)
