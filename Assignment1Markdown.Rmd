@@ -10,10 +10,10 @@ bibliography:
 
 ```{r}
 # Set working directory (for Unger's computer - dual work-path produces an error)
-setwd("/Users/Unger/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
+#setwd("/Users/Unger/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
 
 # Load packages and create BibTeX file (just examples)
-PackagesUsed <- c("ggplot2", "repmis", "rio")
+PackagesUsed <- c("ggplot2", "repmis")
 
 # Load PackagesUsed and create .bib BibTeX file
 repmis::LoadandCite(PackagesUsed, file = "Ass1Packages.bib", install = FALSE)
@@ -30,5 +30,7 @@ ggplot(mtcars, aes(hp, mpg)) + geom_point()
 Referencing the articles @Pemstein2010 and @WorldBank2013.
 
 Referencing R [@CiteR], ggplot2 [@R-ggplot2] and repmis [@R-repmis].
+
+Reference bibliography @Eichholtz1998
 
 ## References
