@@ -55,18 +55,111 @@ barplot(collapsed$Freq.sum,
         )
 ```
 
-# Analysis of the dataset 'Life Cycle Savings'
+# Analysis of the dataset 'LifeCycleSavings'
 
 ```{r, include=FALSE}
 source('savings_analysis.R')
 ```
 
-## Summary Statistics
+## Inspecting the data
 
+**Table of Summary Statistics**
 ```{r}
 knitr::kable(res_df, digits = 2)
 ```
 
+**Looking for skewed data**
+```{r}
+hist(LifeCycleSavings$sr,
+     ylim = c(0,30),
+     main = '% savings ratio per country (averaged between 1970 and 1980)', 
+     xlab = '% savings ratio', 
+     ylab = 'Frequency')
+
+
+hist(LifeCycleSavings$dpi,
+     ylim=c(0,20),
+     main = 'Disposable income (averaged between 1970 and 1980)', 
+     xlab = 'Disposable income (in USD)')
+
+hist(LifeCycleSavings$ddpi, main = 'Growth rate of disposable income',
+     xlab = 'growth rate of disposable income (in percent)')
+```
+
+The histrograms reveal that *savings ratio* is only slightly left-skewed, while *disposable income* and *growth of disposable incom* are strongly right-skewed. To correct for this, we will take the natural log of the latter two variables.
+
+Additionally we create dummies which split the data set in above the median and below the median for the variables *percent of population under 15 (pop15)*, *precent of population over 75 (pop75)*, as well as for *disposable income* and *growth of disposable income*.
+
+## Analyzing the Data
+
+**Data Distribution**
+
+First, we take a closer look at the dependent variable *savings rate*:
+```{r}
+boxplot(combined_df$sr, main = '% savings ratio per country (averaged btw 1970 and 1980)')
+summary(combined_df$sr)
+```
+The boxplot shows that 75 percent of the country observations have an average savings rate between 6.97 and 12.62 percent. The average savings rate is `r mean(combined_df$sr)` percent (mean).The distribution is slightly left-skewed (higher median than mean).
+
+Second, we inspect the main explanatory variable *disposable income*:
+```{r}
+boxplot(combined_df$dpi, main = 'Distribution of disposable income (in USD)')
+summary(combined_df$dpi)
+```
+The boxplot shows that 75 percent of the country observations have an average disposable income between 288,2 and 1796 USD a month. The average disposable income is `r mean(combined_df$dpi)` USD. The distribution is strongly right-skewed (higher mean than median). Therefore, we will use the log-transformation.
+
+**Are savings rates and disposable income correlated?**
+```{r}
+# Plot out the variables
+ggplot2::ggplot(combined_df, aes(ln.dpi, sr))+
+  geom_point(shape=1) + geom_smooth(method=lm) + theme_bw() + 
+  labs(title = "Correlation of disposable income and savings rate (linear)", 
+       x = "disposable income (logged)", y = "% savings rate")
+
+# Using loess instead of linear regression line
+ggplot2::ggplot(combined_df, aes(ln.dpi, sr)) +
+  geom_point(shape=1) + geom_smooth() + theme_bw() +
+  labs(title = "Correlation of disposable income and savings rate (loess)", 
+       x = "disposable income (logged)", y = "% savings rate")
+
+# Testing for correlation
+cor.test(combined_df$ln.dpi, combined_df$sr)
+```
+The analysis shows that disposable income is postively associated with savings rates. The correlation coefficient of 0.28 is however not statistically significant at the 95% level. The second plot suggests a sinus curve relationship. 
+
+In order to understand the correlation better we assess the distribution with a splitted sample into richer and poorer countries (poorer = 0, richer = 1).
+```{r}
+boxplot(combined_df$sr~combined_df$dum.rich)
+```
+The boxplot shows that richer countries have a much more compressed distribution that does not extend to very low savings rates. On average richer countries have a higher savings rate. 
+
+
+##Inspecting the influence of control variables
+
+In a final step we make a graphical inspection of the following control variables:
+1. Growth of disposable income
+2. Share of old population (above 75)
+
+For the inspection we split the sample again with dummy variables in above and below median groups.
+
+**1. Growth of disposable income (slow growth = 0, fast growth = 1)**
+```{r}
+ggplot2::ggplot(combined_df, aes(ln.dpi, sr, color=dum.fast.foo)) +
+  geom_point(shape=1) + scale_colour_hue(l=50) + 
+  geom_smooth(method=lm) +
+  labs(title = "Correlation of disposable income and savings rate (sample splitted 
+       over growth of disposable incom", 
+       x = "disposable income (logged)", y = "% savings rate")
+```
+Countries with higher growth rates seem to have a slightly stronger correlation between savings rate and disposable income.
+
+
+**2. Share of older population (lower percentage = 0, higher percentage = 1)**
+```{r}
+boxplot(combined_df$sr~combined_df$dum.old)
+```
+
+Countries with a larger share of an older population seem to have a more compressed distribution of savings rates. On average savings rates are higher. This resembles the sample split for rich and poor countries. 
 
 Packages used [@CiteR], [@R-doBy], [@R-ggplot2] and [@R-repmis].
 

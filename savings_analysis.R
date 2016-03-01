@@ -82,7 +82,7 @@ combined_df <- data.frame(LifeCycleSavings, ln.ddpi, ln.dpi, dum.old,
 #III. Analysis
 #############
 
-### Main variable of interest: Savings Ratio (sr)
+### Dependent variable: Savings Ratio (sr)
 
 boxplot(combined_df$sr, main = '% savings ratio per country (averaged btw 1970 and 1980)')
 summary(combined_df$sr)
@@ -118,6 +118,10 @@ cor.test(combined_df$ln.dpi, combined_df$sr)
   # The variables are positively correlated (0.28). 
   # The correlation is not significant at the 95% level. 
 
+# Boxplot with splitted sample (dum.rich)
+boxplot(combined_df$sr~combined_df$dum.rich)
+# Richer countries (dpi higher than median) have a much more compressed 
+# distribution of savings rates and on average a higher savings rate.
 
 ### Testing the correlation for conditions
 
@@ -132,16 +136,11 @@ ggplot2::ggplot(combined_df, aes(ln.dpi, sr, color=dum.young.foo)) +
   geom_smooth(method=lm)
 
 
-
-### Boxplot
-boxplot(combined_df$sr~combined_df$dum.rich)
-  # Richer countries (dpi higher than median) have a much more compressed 
-  # distribution of savings rates and on average a higher savings rate.
-
+# Condition: Older population
 boxplot(combined_df$sr~combined_df$dum.old)
   # Countries with a larger share of old people (pop75 higher than median)  have 
   # a much more compressed distribution of savings rates and on average a higher savings rate.
-boxplot(combined_df$sr~combined_df$dum.young)
+
 
 
 
