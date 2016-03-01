@@ -5,7 +5,7 @@
 # Loading packages
 library(ggplot2)
 library(dplyr)
-
+library(repmis)
 
 # Set working directory
 possiblewd <- c("~/Dropbox/4_Spring_2016/2_Collaborative Data Analysis/", 
@@ -15,14 +15,22 @@ set_valid_wd(possiblewd)
 # Load Data
 data("LifeCycleSavings")
 
-#?LifeCycleSavings
 
 #######
 #I. Inspecting the data
 #######
 
 #Summary
-summary(LifeCycleSavings)
+#summary(LifeCycleSavings)
+
+res <- lapply(LifeCycleSavings, function(x) rbind( mean = mean(x) ,
+                                         sd = sd(x) ,
+                                         median = median(x) ,
+                                         minimum = min(x) ,
+                                         maximum = max(x) ,
+                                         s.size = length(x) ) )
+res_df <- as.data.frame(res)
+
 
 
 # Histograms
@@ -50,20 +58,20 @@ hist(LifeCycleSavings$ddpi, main = 'Growth rate of disposable income',
 
 # Log Data
 ln.dpi <- log(LifeCycleSavings$dpi)
-hist(lg_dpi)
+hist(ln.dpi)
 
 ln.ddpi <- log(LifeCycleSavings$ddpi)
-hist(lg_ddpi)
+hist(ln.ddpi)
 
-# Creating Dummies for below or above the mean values
+# Creating Dummies to split the data set at the median
 
 dum.old <- as.numeric(LifeCycleSavings$pop75>median(LifeCycleSavings$pop75))
 dum.young <- as.numeric(LifeCycleSavings$pop15>median(LifeCycleSavings$pop15))
 dum.rich <- as.numeric(LifeCycleSavings$dpi>median(LifeCycleSavings$dpi))
 dum.fast <- as.numeric(LifeCycleSavings$ddpi>median(LifeCycleSavings$ddpi))
 
-dum.fast.foo <- as.character(combined_df$dum.fast)
-dum.young.foo <- as.character(combined_df$dum.young)
+dum.fast.foo <- as.character(dum.fast)
+dum.young.foo <- as.character(dum.young)
 
 # Combine variables to new data frame
 combined_df <- data.frame(LifeCycleSavings, ln.ddpi, ln.dpi, dum.old,

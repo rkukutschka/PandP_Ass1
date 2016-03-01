@@ -10,7 +10,7 @@ bibliography: Ass1Packages.bib
 # Load packages and create BibTeX file for R-packages
 PackagesUsed <- c("ggplot2", "repmis", "doBy")
 
-setwd("~/Documents/Collaborative Social Science/Collaborative Analysis Assignments/PandP_Ass1")
+setwd("~/Dropbox/4_Spring_2016/2_Collaborative Data Analysis/PandP_Ass1")
 
 # Load PackagesUsed and create .bib BibTeX file
 repmis::LoadandCite(PackagesUsed, file = "Ass1Packages.bib", install = FALSE)
@@ -54,6 +54,19 @@ barplot(collapsed$Freq.sum,
         ylim = c(0, 1400)
         )
 ```
+
+# Analysis of the dataset 'Life Cycle Savings'
+
+```{r, include=FALSE}
+source('savings_analysis.R')
+```
+
+## Summary Statistics
+
+```{r}
+knitr::kable(res_df, digits = 2)
+```
+
 
 Packages used [@CiteR], [@R-doBy], [@R-ggplot2] and [@R-repmis].
 
