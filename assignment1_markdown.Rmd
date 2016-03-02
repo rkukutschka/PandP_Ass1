@@ -3,7 +3,7 @@ title: "Assignment1"
 author: "Philip & Philipp"
 date: "23 Feb 2016"
 output: pdf_document
-bibliography: Ass1Packages.bib
+bibliography: Packages.bib
 ---
 
 ```{r, prompt=FALSE}
@@ -13,7 +13,7 @@ PackagesUsed <- c("ggplot2", "repmis", "doBy")
 setwd("~/Dropbox/4_Spring_2016/2_Collaborative Data Analysis/PandP_Ass1")
 
 # Load PackagesUsed and create .bib BibTeX file
-repmis::LoadandCite(PackagesUsed, file = "Ass1Packages.bib", install = FALSE)
+repmis::LoadandCite(PackagesUsed, file = "Packages.bib", install = FALSE)
 ```
 
 # Analysis of the dataset 'occupationalStatus'
