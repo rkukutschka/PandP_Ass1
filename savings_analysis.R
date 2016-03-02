@@ -30,8 +30,8 @@ res <- lapply(LifeCycleSavings, function(x) rbind( mean = mean(x) ,
                                          maximum = max(x) ,
                                          s.size = length(x) ) )
 res_df <- as.data.frame(res)
-
-
+res_df <- t(res_df)
+knitr::kable(res_df, digits = 2)
 
 # Histograms
 hist(LifeCycleSavings$sr,
