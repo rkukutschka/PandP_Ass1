@@ -60,3 +60,6 @@ barplot(collapsed$Freq.sum,
         col = "Navyblue",
         ylim = c(0, 1400)
         )
+        
+source("savings_analysis.R", local = FALSE, print.eval = TRUE, verbose = TRUE)
+citation()
